@@ -20,18 +20,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
-          
+          # removed cache: 'npm' to avoid lockfile errors
+
       # 3. Install dependencies
       - name: Install dependencies
         run: npm install
 
       # 4. Run Cypress tests
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build --if-present
-          start: npm start --if-present
+        run: npx cypress run   # using npx instead of build/start since no app server is specified
 
       # 5. Upload screenshots & videos if tests fail
       - name: Upload Cypress screenshots
