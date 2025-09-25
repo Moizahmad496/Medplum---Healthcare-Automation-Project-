@@ -1,39 +1,38 @@
 name: Cypress Tests
 
+# When to run this workflow
+
+# When to run this workflow
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" ]    # Runs on push to main branch
   pull_request:
-    branches: [ "main" ]
-
+    branches: [ "main" ]    # Runs on PR to main branch
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest   # GitHub provides Linux VM
 
     steps:
-      # 1. Checkout code
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # Step 1: Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # 2. Set up Node.js
+      # Step 2: Setup Node.js (Cypress runs on Node)
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
-          
-      # 3. Install dependencies
+
+      # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      # 4. Run Cypress tests
+      # Step 4: Run Cypress tests
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build --if-present
-          start: npm start --if-present
+        run: npx cypress run --spec "cypress/e2e/register.cy.js, cypress/e2e/login.cy.js, cypress/e2e/create_patient.cy.js"
+ 
 
-      # 5. Upload screenshots & videos if tests fail
+      # (Optional) Upload screenshots if tests fail
       - name: Upload Cypress screenshots
         if: failure()
         uses: actions/upload-artifact@v4
@@ -41,8 +40,9 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
 
+      # (Optional) Upload Cypress videos always
       - name: Upload Cypress videos
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
