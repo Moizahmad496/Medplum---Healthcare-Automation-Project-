@@ -1,31 +1,28 @@
 name: Cypress Tests
 
 # When to run this workflow
-
-# When to run this workflow
 on:
   push:
     branches: [ "main" ]    # Runs on push to main branch
   pull_request:
     branches: [ "main" ]    # Runs on PR to main branch
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest   # GitHub provides Linux VM
 
-   steps:
-   
-  - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  - name: Install dependencies
-    run: npm install
+      - name: Install dependencies
+        run: npm install
 
-  - name: Make Cypress binary executable
-    run: chmod +x node_modules/.bin/cypress
-
+      - name: Make Cypress binary executable
+        run: chmod +x node_modules/.bin/cypress
 
       # Step 4: Run Cypress tests
       - name: Run Cypress tests
-        run: npx cypress run --spec "cypress/e2e/login.cy.js, cypress/e2e/addtocart.cy.js, cypress/e2e/checkout.cy.js"
+        run: npx cypress run --spec "cypress/e2e/login.cy.js,cypress/e2e/addtocart.cy.js,cypress/e2e/checkout.cy.js"
 
       # (Optional) Upload screenshots if tests fail
       - name: Upload Cypress screenshots
