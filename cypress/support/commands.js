@@ -35,6 +35,7 @@
 //     }
 //   }
 // }
+import 'cypress-file-upload';
 
 Cypress.Commands.add("signin", (email, password) => {
   cy.visit("https://app.medplum.com/signin");

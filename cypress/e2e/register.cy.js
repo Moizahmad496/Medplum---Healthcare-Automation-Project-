@@ -21,7 +21,7 @@ describe('Registration Form', () => {
       // Create Project Step
      // cy.contains("Create Project").should("exist");
         cy.get('input[name="projectName"]').type("Test Project");
-     cy.get('button').contains('Create project').click();
+     cy.get('button').contains('Create Project ').click();
 
     
     });
