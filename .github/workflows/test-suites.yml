@@ -22,7 +22,7 @@ jobs:
 
       # Step 4: Run Cypress tests
       - name: Run Cypress tests
-        run: npx cypress run --spec "cypress/e2e/login.cy.js,cypress/e2e/addtocart.cy.js,cypress/e2e/checkout.cy.js"
+        run: npx cypress run --spec "cypress/e2e/register.cy.js,cypress/e2e/login.cy.js,cypress/e2e/create_patient.cy.js"
 
       # (Optional) Upload screenshots if tests fail
       - name: Upload Cypress screenshots
