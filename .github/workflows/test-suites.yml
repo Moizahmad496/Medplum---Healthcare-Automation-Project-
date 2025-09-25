@@ -11,26 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 2. Set up Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          # removed cache: 'npm' to avoid lockfile errors
 
-      # 3. Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 4. Run Cypress tests
       - name: Run Cypress tests
-        run: npx cypress run   # using npx instead of build/start since no app server is specified
+        run: npx cypress run --browser chrome --headless
 
-      # 5. Upload screenshots & videos if tests fail
       - name: Upload Cypress screenshots
         if: failure()
         uses: actions/upload-artifact@v4
