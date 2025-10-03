@@ -1,4 +1,4 @@
-name: CI Pipeline (Cypress + SonarQube)
+name: CI Pipeline (Cypress + SonarCloud)
 
 on:
   push:
@@ -10,22 +10,18 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  cypress-and-sonarqube:
+  cypress-and-sonarcloud:
     runs-on: ubuntu-latest
 
     steps:
       # Checkout repo
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # Needed for SonarQube analysis
+          fetch-depth: 0   # Needed for SonarCloud analysis
 
       # Install dependencies
       - name: Install dependencies
         run: npm install
-
-      # Make Cypress binary executable
-      - name: Make Cypress binary executable
-        run: chmod +x node_modules/.bin/cypress
 
       # Run Cypress tests
       - name: Run Cypress tests
@@ -39,9 +35,9 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
 
-      # Run SonarQube Scan
-      - name: SonarQube Scan
+      # Run SonarCloud Scan
+      - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: https://sonarcloud.io
